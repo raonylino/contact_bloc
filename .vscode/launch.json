@@ -19,7 +19,11 @@
             "name": "contactbloc (release mode)",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "flutterMode": "release",
+            "toolArgs": ["--dart-define-from-file",
+            "./config/env.json"
+        ],
+        
         }
     ]
 }
