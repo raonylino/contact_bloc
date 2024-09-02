@@ -91,6 +91,7 @@ class _ContactUpdateCubitPageState extends State<ContactUpdateCubitPage> {
                   },
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
                       onPressed: () {

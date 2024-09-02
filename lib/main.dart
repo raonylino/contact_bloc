@@ -75,15 +75,14 @@ class MyApp extends StatelessWidget {
               ),
             );
           },
-
           '/contact/cubit/list': (context) {
             return BlocProvider(
-              create: (context) => ContactListCubit(repository: context.read(),
+              create: (context) => ContactListCubit(
+                repository: context.read(),
               )..findAll(),
               child: const ContactsListCubitPage(),
             );
           },
-
           '/contact/cubit/register': (context) {
             return BlocProvider(
               create: (context) => ContactRegisterCubit(
@@ -97,7 +96,7 @@ class MyApp extends StatelessWidget {
                 ModalRoute.of(context)!.settings.arguments as ContactsModel;
             return BlocProvider(
               create: (context) => ContactUpdateCubit(
-                contactsRepository: context.read(),
+                contactsRepository: context.read<ContactsRepository>(),
               ),
               child: ContactUpdateCubitPage(
                 contact: contactCubit,
