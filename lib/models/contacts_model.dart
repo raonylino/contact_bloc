@@ -1,8 +1,7 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class ContactsModel {
-  final String? id;
+  final int? id; // Alterado para int
   final String name;
   final String email;
 
@@ -22,7 +21,7 @@ class ContactsModel {
 
   factory ContactsModel.fromMap(Map<String, dynamic> map) {
     return ContactsModel(
-      id: map['id'] != null ? map['id'] as String : null,
+      id: map['id'] != null ? map['id'] as int : null, // Alterado para int
       name: map['name'] as String,
       email: map['email'] as String,
     );

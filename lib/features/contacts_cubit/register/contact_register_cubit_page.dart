@@ -1,34 +1,34 @@
-import 'package:contact_bloc/features/contacts/register/bloc/contact_register_bloc.dart';
+import 'package:contact_bloc/features/contacts_cubit/register/cubit/contact_register_cubit.dart';
+import 'package:contact_bloc/models/contacts_model.dart';
 import 'package:contact_bloc/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ContactRegisterPage extends StatefulWidget {
-  const ContactRegisterPage({super.key});
+class ContactRegisterCubitPage extends StatefulWidget {
+
+  const ContactRegisterCubitPage({ super.key });
 
   @override
-  State<ContactRegisterPage> createState() => _ContactRegisterPageState();
+  State<ContactRegisterCubitPage> createState() => _ContactRegisterCubitPageState();
 }
 
-class _ContactRegisterPageState extends State<ContactRegisterPage> {
-  final formKey = GlobalKey<FormState>();
-  final _nameEC = TextEditingController();
-  final _emailEC = TextEditingController();
+class _ContactRegisterCubitPageState extends State<ContactRegisterCubitPage> {
+    final formKey = GlobalKey<FormState>();
+    final _nameEC = TextEditingController();
+    final _emailEC = TextEditingController();
 
-  @override
-  void dispose() {
-    _nameEC.dispose();
-    _emailEC.dispose();
-    super.dispose();
-  }
+    @override
+    void dispose() {
+      _nameEC.dispose();
+      _emailEC.dispose();
+      super.dispose();
+    }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Register'),
-      ),
-      body: BlocListener<ContactRegisterBloc,ContactRegisterState>(
+   @override
+   Widget build(BuildContext context) {
+       return Scaffold(
+           appBar: AppBar(title: const Text('Contact Register Cubit'),),
+                 body: BlocListener<ContactRegisterCubit,ContactRegisterCubitState>(
         listenWhen: (previous, current) => current.maybeWhen(
           success: () => true,
           error: (message) => true,
@@ -81,17 +81,17 @@ class _ContactRegisterPageState extends State<ContactRegisterPage> {
                   onPressed: () {
                     final validate = formKey.currentState?.validate() ?? false;
                     if (validate) {
-                      context.read<ContactRegisterBloc>().add(
-                            ContactRegisterEvent.save(
-                              name: _nameEC.text,
-                              email: _emailEC.text,
-                            ),
-                          );
+                      context.read<ContactRegisterCubit>().register(
+                        ContactsModel(
+                          name: _nameEC.text,
+                          email: _emailEC.text,
+                        ),
+                      );
                     }
                   },
                   child: const Text('Salvar'),
                 ),
-                Loader<ContactRegisterBloc, ContactRegisterState>(
+                Loader<ContactRegisterCubit, ContactRegisterCubitState>(
                   selector: (state) => state.maybeWhen(
                     loading: () => true,
                     orElse: () => false,
@@ -102,6 +102,6 @@ class _ContactRegisterPageState extends State<ContactRegisterPage> {
           ),
         ),
       ),
-    );
+       );
   }
 }

@@ -1,23 +1,22 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:contact_bloc/features/contacts/update/bloc/bloc/contact_update_bloc.dart';
+import 'package:contact_bloc/features/contacts_cubit/update/cubit/contact_update_cubit.dart';
 import 'package:contact_bloc/models/contacts_model.dart';
 import 'package:contact_bloc/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ContactUpdatePage extends StatefulWidget {
+class ContactUpdateCubitPage extends StatefulWidget {
   final ContactsModel contact;
 
-  const ContactUpdatePage({
+  const ContactUpdateCubitPage({
     super.key,
     required this.contact,
   });
-
+  
   @override
-  State<ContactUpdatePage> createState() => _ContactUpdatePageState();
+  State<ContactUpdateCubitPage> createState() => _ContactUpdateCubitPageState();
 }
 
-class _ContactUpdatePageState extends State<ContactUpdatePage> {
+class _ContactUpdateCubitPageState extends State<ContactUpdateCubitPage> {
   final formKey = GlobalKey<FormState>();
   late final TextEditingController _nameEC;
   late final TextEditingController _emailEC;
@@ -40,9 +39,9 @@ class _ContactUpdatePageState extends State<ContactUpdatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Update'),
+        title: const Text('Update Cubit'),
       ),
-      body: BlocListener<ContactUpdateBloc, ContactUpdateState>(
+      body: BlocListener<ContactUpdateCubit, ContactUpdateCubitState>(
         listener: (context, state) {
           state.whenOrNull(
             success: () {
@@ -98,11 +97,11 @@ class _ContactUpdatePageState extends State<ContactUpdatePage> {
                         final validate =
                             formKey.currentState?.validate() ?? false;
                         if (validate) {
-                          context.read<ContactUpdateBloc>().add(
-                                ContactUpdateEvent.save(
+                          context.read<ContactUpdateCubit>().update(
+                                ContactsModel(
                                   name: _nameEC.text,
                                   email: _emailEC.text,
-                                  id: widget.contact.id!,
+                                  id: widget.contact.id,
                                 ),
                               );
                         }
@@ -111,7 +110,7 @@ class _ContactUpdatePageState extends State<ContactUpdatePage> {
                     ),
                   ],
                 ),
-                Loader<ContactUpdateBloc, ContactUpdateState>(
+                Loader<ContactUpdateCubit, ContactUpdateCubitState>(
                   selector: (state) => state.maybeWhen(
                     loading: () => true,
                     orElse: () => false,

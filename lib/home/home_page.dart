@@ -24,7 +24,9 @@ class HomePage extends StatelessWidget {
                   ElevatedButton(onPressed: () {
                     Navigator.pushNamed(context, '/contact/list');
                   }, child: const Text('Contact')),
-                  ElevatedButton(onPressed: () {}, child: const Text('Contact Cubit')),
+                  ElevatedButton(onPressed: () {
+                    Navigator.pushNamed(context, '/contact/cubit/list');
+                  }, child: const Text('Contact Cubit')),
                 ],
               ),
             ),

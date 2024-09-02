@@ -4,5 +4,8 @@ part of 'contact_list_bloc.dart';
 class ContactListEvent with _$ContactListEvent {
 
   const factory ContactListEvent.findAll() = _ContactListEventFindAll;
+  const factory ContactListEvent.delete(
+    {required ContactsModel model}
+  ) = _ContactListEventDelete;
 
 }
